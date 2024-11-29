@@ -1,0 +1,7 @@
+name: TBGeneral
+version: '0.1-BETA'
+main: org.TBCreates.TBGeneral.TBGeneral
+api-version: '1.21'
+load: STARTUP
+authors: [ thebestharrison ]
+description: A plugin for all your general needs
