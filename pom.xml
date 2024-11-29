@@ -38,6 +38,10 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <outputFile>C:\Users\haryd\OneDrive\Desktop\mcserver\plugins\TMGeneral.jar</outputFile>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
