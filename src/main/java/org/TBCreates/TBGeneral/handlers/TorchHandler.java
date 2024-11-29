@@ -19,6 +19,9 @@ public class TorchHandler implements Listener {
     public void onTorchPlace_Low(BlockPlaceEvent event){
         if (event.getBlock().getType() == Material.TORCH) {
             event.getBlock().setType(Material.DIAMOND_BLOCK);
+            if (event.getBlock().getType() == Material.WALL_TORCH) {
+                event.getBlock().setType(Material.DIAMOND_BLOCK);
+            }
         }
     }
 
