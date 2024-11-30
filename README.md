@@ -6,12 +6,11 @@ TBGeneral is a powerful, multi-purpose plugin for Minecraft servers running on B
 
 - **All-in-One Utility**: A collection of useful features to enhance your Minecraft server.
 - **Permissions Integration**: Fully compatible with LuckPerms to manage permissions and player groups.
-- **Custom Commands**: Create and customize commands with ease.
 - **Efficient and Lightweight**: Designed to minimize server load while providing maximum functionality.
 
 ## Requirements
 
-- **Minecraft Server**: Bukkit 1.8 or later
+- **Minecraft Server**: Bukkit 1.21.3 or later
 - **LuckPerms**: Required for permission management
 
 ## Installation
