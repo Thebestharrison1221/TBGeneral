@@ -15,25 +15,24 @@ public class TorchHandler implements Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = EventPriority.LOW)
-    public void onTorchPlace_Low(BlockPlaceEvent event){
-        if (event.getBlock().getType() == Material.TORCH) {
-            event.getBlock().setType(Material.DIAMOND_BLOCK);
-        if (event.getBlock().getType() == Material.WALL_TORCH) {
-                event.getBlock().setType(Material.DIAMOND_BLOCK);
-            }
-        }
-    }
-
-    @EventHandler
-    public void onTorchPlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
-
-        if(block.getType() != Material.TORCH) {
-            return;
-        }
-
-        Bukkit.getLogger().info("A torch was placed");
-    }
-
+//    @EventHandler(priority = EventPriority.LOW)
+//    public void onTorchPlace_Low(BlockPlaceEvent event) {
+//        if (event.getBlock().getType() == Material.TORCH) {
+//            return;
+//        }
+//        if (!event.getPlayer().hasPermission("TBGeneral.torch.diamond")) {
+//            event.getBlock().setType(Material.DIAMOND_BLOCK);
+//        }
+//    }
+//    @EventHandler(priority = EventPriority.NORMAL)
+//    public void onTorchPlace_Normal(BlockPlaceEvent event) {
+//        Block block = event.getBlock();
+//
+//        if(block.getType() != Material.TORCH) {
+//            return;
+//        }
+//
+//        Bukkit.getLogger().info("A torch was placed");
+//    }
+//
 }

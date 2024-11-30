@@ -1,0 +1,4 @@
+org\TBCreates\TBGeneral\handlers\PlayerHandler.class
+org\TBCreates\TBGeneral\commands\Menu.class
+org\TBCreates\TBGeneral\commands\fly.class
+org\TBCreates\TBGeneral\commands\ForceGiveBookCommand.class
