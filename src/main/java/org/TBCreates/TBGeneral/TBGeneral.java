@@ -1,8 +1,6 @@
 package org.TBCreates.TBGeneral;
 
-import org.TBCreates.TBGeneral.commands.ForceGiveBookCommand;
-import org.TBCreates.TBGeneral.commands.Menu;
-import org.TBCreates.TBGeneral.commands.fly;
+import org.TBCreates.TBGeneral.commands.*;
 import org.TBCreates.TBGeneral.handlers.PlayerHandler;
 import org.TBCreates.TBGeneral.handlers.TorchHandler;
 import org.bukkit.Bukkit;
@@ -23,7 +21,7 @@ public final class TBGeneral extends JavaPlugin implements Listener {
     public void onEnable() {
         // Save default config if it doesn't exist
         saveDefaultConfig();
-
+        this.saveDefaultConfig();
         // Get the single prefix from the config
         prefix = getConfig().getString("prefix");  // Default to this if not found
 
@@ -36,9 +34,20 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         Bukkit.getLogger().info("-------------------------------------");
 
         // Register commands and events
-        getCommand("fly").setExecutor(new fly());
+        getCommand("fly").setExecutor(new fly(this));
+        getCommand("vanish").setExecutor(new vanish(this));
         getCommand("menu").setExecutor(new Menu(this));
         getCommand("givebook").setExecutor(new ForceGiveBookCommand(this));
+        getCommand("tbgeneral").setExecutor(new TBGeneralCommand(this));
+        getCommand("tbgeneral").setTabCompleter(new TBGeneralCommand(this));  // Register tab completer
+
+        getCommand("gmc").setExecutor(new GameModeCommand(this));
+        getCommand("gms").setExecutor(new GameModeCommand(this));
+        getCommand("gma").setExecutor(new GameModeCommand(this));
+        getCommand("gmsp").setExecutor(new GameModeCommand(this));
+        getCommand("heal").setExecutor(new GameModeCommand(this)); // Register heal command
+        getCommand("bring").setExecutor(new GameModeCommand(this));
+        getCommand("goto").setExecutor(new GameModeCommand(this));
 
         // Register custom handlers or listeners
         new TorchHandler(this);

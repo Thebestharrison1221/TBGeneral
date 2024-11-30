@@ -3,26 +3,70 @@ version: '0.1-BETA'
 main: org.TBCreates.TBGeneral.TBGeneral
 api-version: '1.21'
 load: STARTUP
-authors: [ thebestharrison ]
+authors: [thebestharrison]
 description: A plugin for all your general needs
 depend: [LuckPerms]
+
 commands:
   givebook:
     description: Force give the TBGeneral Info book to a player.
     usage: /givebook <player>
-    permission: tbgeneral.givebook
+    permission: tbgeneral.admin
     permission-message: You do not have permission to use this command.
   fly:
     description: Toggles flying for command sender.
     usage: /fly
     aliases: f
-    permission: TBGeneral.fly
+    permission: tbgeneral.admin
+  vanish:
+    description: Toggles vanish for command sender.
+    usage: /vanish
+    aliases: v
+    permission: tbgeneral.admin
+  gmc:
+    description: Sets the player’s game mode to Creative.
+    usage: /gmc
+    permission: tbgeneral.admin
+  gms:
+    description: Sets the player’s game mode to Survival.
+    usage: /gms
+    permission: tbgeneral.admin
+  gma:
+    description: Sets the player’s game mode to Adventure.
+    usage: /gma
+    permission: tbgeneral.admin
+  gmsp:
+    description: Sets the player’s game mode to Spectator.
+    usage: /gmsp
+    permission: tbgeneral.admin
   menu:
-    description: Toggles flying for command sender.
+    description: Opens the game mode selection menu.
     usage: /gmselect
     aliases: gmsel
-    permission: TBGeneral.gmselect
+    permission: tbgeneral.admin
+  tbgeneral:
+    description: Main command for TBGeneral plugin
+    usage: /tbgeneral <reload>
+    aliases: tbg
+  tbgcommands:
+    description: Useful commands for players
+    usage: /tbgc <sub-command>
+    aliases: tbgc
+    permission: tbgeneral.admin
+  heal:
+    description: used to heal players
+    usage: /heal <sub-command>
+    permission: tbgeneral.admin
+  bring:
+    description: Useful commands to bring players
+    usage: /bring <sub-command>
+    permission: tbgeneral.admin
+  goto:
+    description: Useful commands to goto players
+    usage: /goto <sub-command>
+    permission: tbgeneral.admin
+
 permissions:
-  tbgeneral.givebook:
+  tbgeneral.admin:
     description: Allows forcing the TBGeneral book to be given.
     default: op

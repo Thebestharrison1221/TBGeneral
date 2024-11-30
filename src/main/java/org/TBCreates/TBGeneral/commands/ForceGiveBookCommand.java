@@ -21,7 +21,7 @@ public class ForceGiveBookCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("tbgeneral.givebook")) {
+        if (!sender.hasPermission("tbgeneral.admin")) {
             sender.sendMessage("§cYou do not have permission to use this command.");
             return true;
         }
@@ -54,16 +54,11 @@ public class ForceGiveBookCommand implements CommandExecutor {
                         "§n§9https://github.com/Thebestharrison1221/TBGeneral"
         );
         bookMeta.addPage(
-                "Commands:",
-                        "/gmselect (/gmsel)",
-                        "/fly (/f)"
-
+                "Commands:\n/gmselect - (/gmsel)\n/fly - (/f)"
         );
-        bookMeta.addPage(
-                "Permissions:",
-                        "TBGeneral.gmselect",
-                        "TBGeneral.fly"
 
+        bookMeta.addPage(
+                "Permissions:\nTBGeneral.gmselect\nTBGeneral.fly"
         );
         book.setItemMeta(bookMeta);
 
