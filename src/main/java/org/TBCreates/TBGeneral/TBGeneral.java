@@ -21,20 +21,19 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-        Bukkit.getLogger().info("[TBGeneral] Starting");
-
         // Save default config if it doesn't exist
         saveDefaultConfig();
 
         // Get the single prefix from the config
-        prefix = getConfig().getString("prefix", "&7[&aTBGeneral&7]");  // Default to this if not found
+        prefix = getConfig().getString("prefix");  // Default to this if not found
 
         // Apply color codes to the prefix
         prefix = ChatColor.translateAlternateColorCodes('&', prefix);
 
         // Example: Logging with the prefix
+        Bukkit.getLogger().info("-------------------------------------");
         Bukkit.getLogger().info(prefix + " Plugin enabled!");
+        Bukkit.getLogger().info("-------------------------------------");
 
         // Register commands and events
         getCommand("fly").setExecutor(new fly());
