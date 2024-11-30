@@ -15,7 +15,7 @@ TBGeneral is a powerful, multi-purpose plugin for Minecraft servers running on B
 
 ## Installation
 
-1. Download the latest version of [TBGeneral](https://github.com/Thebestharrison1221/TBGeneral/).
+1. Download the latest version of [TBGeneral](https://github.com/Thebestharrison1221?tab=packages&repo_name=TBGeneral).
 2. Place the `.jar` file into your server's `plugins` folder.
 3. Install **LuckPerms** if not already installed (available at [LuckPerms on Spigot](https://www.spigotmc.org/resources/luckperms.2143/)).
 4. Restart your server or reload the plugins to enable TBGeneral.
