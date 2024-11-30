@@ -2,8 +2,11 @@ C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\command
 C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\commands\ForceGiveBookCommand.java
 C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\commands\GameModeCommand.java
 C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\commands\Menu.java
+C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\commands\OpenSelectorMenuCommand.java
 C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\commands\TBGeneralCommand.java
+C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\commands\TrophiesMenuCommand.java
 C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\commands\vanish.java
 C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\handlers\PlayerHandler.java
 C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\handlers\TorchHandler.java
+C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\Listeners\TrophiesMenuListener.java
 C:\Users\haryd\Downloads\TBGeneral\src\main\java\org\TBCreates\TBGeneral\TBGeneral.java

@@ -65,7 +65,14 @@ commands:
     description: Useful commands to goto players
     usage: /goto <sub-command>
     permission: tbgeneral.admin
-
+  openselectormenu:
+    description: Opens the main menu.
+    usage: /openselectormenu
+    permission: tbgeneral.admin
+  trophiesmenu:
+    description: Opens the trophies menu
+    usage: /trophiesmenu
+    aliases: []
 permissions:
   tbgeneral.admin:
     description: Allows forcing the TBGeneral book to be given.

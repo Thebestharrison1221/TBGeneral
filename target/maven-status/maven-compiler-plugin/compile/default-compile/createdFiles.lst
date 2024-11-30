@@ -1,7 +1,11 @@
-org\TBCreates\TBGeneral\handlers\PlayerHandler.class
+org\TBCreates\TBGeneral\Listeners\TrophiesMenuListener.class
+org\TBCreates\TBGeneral\commands\TrophiesMenuCommand.class
 org\TBCreates\TBGeneral\commands\vanish.class
 org\TBCreates\TBGeneral\commands\TBGeneralCommand.class
 org\TBCreates\TBGeneral\commands\Menu.class
 org\TBCreates\TBGeneral\commands\GameModeCommand.class
+org\TBCreates\TBGeneral\commands\OpenSelectorMenuCommand.class
+org\TBCreates\TBGeneral\handlers\PlayerHandler.class
 org\TBCreates\TBGeneral\commands\fly.class
+org\TBCreates\TBGeneral\commands\TrophiesMenuCommand$AdvancementEntry.class
 org\TBCreates\TBGeneral\commands\ForceGiveBookCommand.class
