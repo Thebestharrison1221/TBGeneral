@@ -58,7 +58,7 @@ public class ForceGiveBookCommand implements CommandExecutor {
         );
 
         bookMeta.addPage(
-                "Permissions:\nTBGeneral.gmselect\nTBGeneral.fly"
+                "Permissions:\nTBGeneral.admin"
         );
         book.setItemMeta(bookMeta);
 
