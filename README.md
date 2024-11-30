@@ -16,7 +16,7 @@ TBGeneral is a powerful, multi-purpose plugin for Minecraft servers running on B
 
 ## Installation
 
-1. Download the latest version of [TBGeneral](https://github.com/your-username/TBGeneral/releases).
+1. Download the latest version of [TBGeneral](https://github.com/Thebestharrison1221/TBGeneral/).
 2. Place the `.jar` file into your server's `plugins` folder.
 3. Install **LuckPerms** if not already installed (available at [LuckPerms on Spigot](https://www.spigotmc.org/resources/luckperms.2143/)).
 4. Restart your server or reload the plugins to enable TBGeneral.
@@ -29,11 +29,6 @@ TBGeneral is a powerful, multi-purpose plugin for Minecraft servers running on B
 ## Permissions
 
 TBGeneral integrates seamlessly with **LuckPerms** for handling permissions. To give players access to specific features, you will need to set up permissions in LuckPerms. 
-
-### Example Permission Nodes:
-
-- `tbgeneral.command.*` - Grants access to all TBGeneral commands.
-- `tbgeneral.command.example` - Grants access to a specific example command.
   
 You can manage these permissions using LuckPerms commands or through your permissions editor.
 
@@ -41,8 +36,3 @@ You can manage these permissions using LuckPerms commands or through your permis
 
 - **Install LuckPerms**: If you haven’t already, make sure LuckPerms is installed on your server.
 - **Grant Permissions**: Using the LuckPerms command system, grant players or groups the appropriate permissions for TBGeneral.
-
-Example:
-
-```bash
-/lp user <username> permission set tbgeneral.command.example true
