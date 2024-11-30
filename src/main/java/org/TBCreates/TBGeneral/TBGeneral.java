@@ -64,11 +64,8 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
         getCommand("trophiesmenu").setExecutor((CommandExecutor) new TrophiesMenuCommand(this));
         getServer().getPluginManager().registerEvents(new TrophiesMenuListener(new TrophiesMenuCommand(this)), this);
-
         Menu adminMenu = new Menu(this); // Ensure you have an appropriate constructor for Menu
         TrophiesMenuCommand trophiesMenuCommand = new TrophiesMenuCommand(this);
-
-        // Register the OpenSelectorMenuCommand
         OpenSelectorMenuCommand openSelectorMenuCommand = new OpenSelectorMenuCommand(this, adminMenu, trophiesMenuCommand);
         getCommand("openselectormenu").setExecutor(openSelectorMenuCommand);
 

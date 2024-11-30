@@ -73,7 +73,8 @@ commands:
     description: Opens the trophies menu
     usage: /trophiesmenu
     aliases: []
+    permission: tbgeneral.admin
 permissions:
   tbgeneral.admin:
     description: Allows forcing the TBGeneral book to be given.
-    default: op
+
