@@ -18,11 +18,6 @@ commands:
     usage: /fly
     aliases: f
     permission: tbgeneral.admin
-  vanish:
-    description: Toggles vanish for command sender.
-    usage: /vanish
-    aliases: v
-    permission: tbgeneral.admin
   gmc:
     description: Sets the player’s game mode to Creative.
     usage: /gmc
