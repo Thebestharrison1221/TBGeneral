@@ -2,3 +2,8 @@
 ## MADE BY THEBESTHARRISON
 
 prefix: "&7[&aTBGeneral]"
+db:
+  tables:
+    trophies: "trophies"
+  sqlite:
+    filename: "TBGeneral"
