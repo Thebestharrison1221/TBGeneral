@@ -2,8 +2,11 @@ package org.TBCreates.TBGeneral;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.TBCreates.TBGeneral.Listeners.CacheUnloadListener;
 import org.TBCreates.TBGeneral.Listeners.TrophiesMenuListener;
 import org.TBCreates.TBGeneral.commands.*;
+import org.TBCreates.TBGeneral.data.Cache;
+import org.TBCreates.TBGeneral.data.SQLite;
 import org.TBCreates.TBGeneral.handlers.AdvancementListener;
 import org.TBCreates.TBGeneral.handlers.PlayerHandler;
 import org.TBCreates.TBGeneral.handlers.TorchHandler;
@@ -16,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.units.qual.C;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -24,6 +28,19 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
     // Declare the instance variable for the prefix
     private String prefix;
+    private SQLite sqlite;
+    private Cache dbCache;
+
+    public SQLite sql()
+    {
+        return sqlite;
+    }
+
+    public Cache cache()
+    {
+        return dbCache;
+    }
+
 
     @Override
     public void onEnable() {
@@ -32,6 +49,11 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
         // Load the prefix from the config
         loadPrefix();
+
+        // Load DB
+        sqlite = new SQLite(this);
+        sqlite.create();
+        dbCache = new Cache(this);
 
         // Example: Logging with the prefix
         Bukkit.getLogger().info("-------------------------------------");
@@ -45,6 +67,7 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         // Initialize handlers
         new TorchHandler(this);
         new PlayerHandler(this);
+        getServer().getPluginManager().registerEvents(new CacheUnloadListener(this), this);
     }
 
     @Override
@@ -71,7 +94,7 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         getCommand("givebook").setExecutor(new ForceGiveBookCommand(this));
         getCommand("tbgeneral").setExecutor(new TBGeneralCommand(this));
         getCommand("tbgeneral").setTabCompleter(new TBGeneralCommand(this));
-        getServer().getPluginManager().registerEvents(new AdvancementListener(), this);
+        getServer().getPluginManager().registerEvents(new AdvancementListener(this), this);
         // Additional Game Mode and Other Commands
         getServer().getPluginManager().registerEvents(new TrophiesMenuListener(new TrophiesMenuCommand(this)), this);
 
@@ -82,7 +105,7 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         OpenSelectorMenuCommand openSelectorMenuCommand = new OpenSelectorMenuCommand(this, adminMenu, trophiesMenuCommand);
         getCommand("openselectormenu").setExecutor(openSelectorMenuCommand);
 
-        getServer().getPluginManager().registerEvents(new AdvancementListener(), this);
+        getServer().getPluginManager().registerEvents(new AdvancementListener(this), this);
 
         getCommand("gmc").setExecutor(new GameModeCommand(this));
         getCommand("gms").setExecutor(new GameModeCommand(this));
