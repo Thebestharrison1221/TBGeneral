@@ -25,7 +25,7 @@ public class GameModeCommand implements CommandExecutor {
             String prefix = plugin.getPrefix();
 
             // Check if the player has permission to change game mode (optional)
-            if (!player.hasPermission("yourplugin.gamemode")) {
+            if (!player.hasPermission("tbgeneral.admin")) {
                 player.sendMessage(prefix + " You do not have permission to change game mode!");
                 return false;
             }

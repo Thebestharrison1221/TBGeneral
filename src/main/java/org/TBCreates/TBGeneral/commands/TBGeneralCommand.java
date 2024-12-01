@@ -38,7 +38,10 @@ public class TBGeneralCommand implements CommandExecutor, TabCompleter {
             }
         }
 
+        // Reload the plugin's config and prefix
         this.plugin.reloadConfig();
+        this.plugin.loadPrefix();  // Ensure prefix is updated after reloading config
+
         sender.sendMessage(this.plugin.getPrefix() + " &aPlugin reloaded successfully!");
         return true;
     }

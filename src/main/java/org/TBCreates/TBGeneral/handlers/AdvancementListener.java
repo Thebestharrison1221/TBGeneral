@@ -1,30 +1,28 @@
-package org.TBCreates.TBGeneral.commands;
+package org.TBCreates.TBGeneral.handlers;
 
-import org.TBCreates.TBGeneral.TBGeneral;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class TrophiesMenuCommand implements CommandExecutor {
+public class AdvancementListener implements Listener {
 
-    private final TBGeneral plugin;
-    private static final int ITEMS_PER_PAGE = 45; // Maximum items per page
-    private final Map<Player, Integer> playerPageMap = new HashMap<>(); // Track player page numbers
-
-    // A map to store advancement keys and their corresponding trophy names
     private static final Map<String, String> advancementKeyToName = new HashMap<>();
+    private static final Set<String> awardedAdvancements = new HashSet<>();
 
     static {
-        // Populate the advancement map with keys and their corresponding trophy names
+        // Add manual advancement mappings (key -> name)
         advancementKeyToName.put("story/stone_tools", "Stone Age");
         advancementKeyToName.put("story/get_upgrade", "Getting an Upgrade");
         advancementKeyToName.put("story/acquire_hardware", "Acquire Hardware");
@@ -83,8 +81,13 @@ public class TrophiesMenuCommand implements CommandExecutor {
         advancementKeyToName.put("story/wax_on", "Wax On");
         advancementKeyToName.put("story/wax_off", "Wax Off");
         advancementKeyToName.put("story/the_power_of_books", "The Power of Books");
+        advancementKeyToName.put("story/shiny_gear", "Cover Me in Diamonds");
+
+        // Add this new advancement
         advancementKeyToName.put("minecraft:adventure/avoid_vibration", "Avoid Vibration");
         advancementKeyToName.put("minecraft:adventure/adventuring_time", "Adventuring Time");
+
+        // New and other Minecraft advancements that are not in the "story" or "adventure" categories:
         advancementKeyToName.put("recipes/misc/iron_nugget_from_smelting", "Acquire Hardware");
         advancementKeyToName.put("recipes/misc/iron_nugget_from_blasting", "Acquire Hardware");
         advancementKeyToName.put("recipes/misc/iron_nugget_from_smithing", "Getting an Upgrade");
@@ -96,102 +99,71 @@ public class TrophiesMenuCommand implements CommandExecutor {
         advancementKeyToName.put("recipes/misc/diamond_pickaxe", "Diamonds!");
         advancementKeyToName.put("recipes/misc/iron_pickaxe", "Isn't It Iron Pick");
         advancementKeyToName.put("recipes/misc/stone_pickaxe", "Stone Age");
-        // Add the rest of the advancements as needed...
     }
 
-    // Define the AdvancementEntry class for storing trophy information
-    public static class AdvancementEntry {
-        private final String name;
-        private final String description;
-        private final int id;
+    @EventHandler
+    public void onAdvancement(PlayerAdvancementDoneEvent event) {
+        Player player = event.getPlayer();
+        String advancementKey = event.getAdvancement().getKey().toString();
 
-        public AdvancementEntry(String name, String description, int id) {
-            this.name = name;
-            this.description = description;
-            this.id = id;
-        }
+        // Debugging - Log the advancement key
+        System.out.println("Advancement Key: " + advancementKey);
 
-        public String getName() {
-            return name;
-        }
+        // Check if the advancement key is in our map
+        if (advancementKeyToName.containsKey(advancementKey)) {
+            String advancementName = advancementKeyToName.get(advancementKey);
 
-        public String getDescription() {
-            return description;
-        }
+            // Debugging - Log the name of the completed advancement
+            System.out.println(player.getName() + " has completed the advancement: " + advancementName);
 
-        public int getId() {
-            return id;
-        }
-    }
-
-    // Create a list of advancements with description and ID
-    private List<AdvancementEntry> getManualAdvancements() {
-        List<AdvancementEntry> advancements = new ArrayList<>();
-
-        // Iterate over the advancement map and create AdvancementEntry objects
-        for (Map.Entry<String, String> entry : advancementKeyToName.entrySet()) {
-            String name = entry.getValue();
-            String description = "Achievement: " + name;  // Placeholder description
-
-            int id = advancements.size() + 1;  // Simple incremental ID based on list index
-
-            // Add the new AdvancementEntry to the list
-            advancements.add(new AdvancementEntry(name, description, id));
-        }
-
-        return advancements;
-    }
-
-    public TrophiesMenuCommand(TBGeneral plugin) {
-        this.plugin = plugin;
-    }
-
-    // Open the trophies menu for the player, showing a specific page
-    public void openTrophiesMenu(Player player, int page) {
-        List<AdvancementEntry> advancements = getManualAdvancements();
-        int startIndex = (page - 1) * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, advancements.size());
-
-        Inventory inventory = Bukkit.createInventory(null, 54, ChatColor.BLUE + "Trophies Menu");
-
-        for (int i = startIndex; i < endIndex; i++) {
-            AdvancementEntry entry = advancements.get(i);
-
-            ItemStack item = new ItemStack(Material.PAPER);
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + entry.getName());
-            meta.setLore(Collections.singletonList(ChatColor.GRAY + entry.getDescription()));
-            meta.setCustomModelData(entry.getId());  // Set custom model data
-            item.setItemMeta(meta);
-
-            inventory.setItem(i - startIndex, item);
-        }
-
-        player.openInventory(inventory);
-        playerPageMap.put(player, page); // Store the current page
-    }
-
-    // Command handler
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-
-            int page = 1;  // Default to the first page
-
-            if (args.length > 0) {
-                try {
-                    page = Integer.parseInt(args[0]);
-                } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid page number.");
-                    return false;
-                }
+            // Check if this advancement has already been given
+            if (!hasReceivedTrophy(player, advancementKey)) {
+                // Now give the player the trophy
+                giveTrophy(player, advancementName);
+                markTrophyGiven(player, advancementKey);
+            } else {
+                System.out.println("Trophy already given for this advancement.");
             }
+        } else {
+            System.out.println("No matching advancement found for: " + advancementKey);
+        }
+    }
 
-            openTrophiesMenu(player, page);
-            return true;
+    private void giveTrophy(Player player, String advancementName) {
+        // Create the item to give (paper with the advancement name)
+        ItemStack trophy = new ItemStack(Material.PAPER);  // Default trophy (Paper)
+        ItemMeta meta = trophy.getItemMeta();
+
+        if (meta != null) {
+            // Set the name of the trophy to the advancement name
+            meta.setDisplayName(ChatColor.GREEN + advancementName);  // Adding color for clarity
+
+            // Set the lore (description) of the trophy
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Completed the advancement: " + ChatColor.AQUA + advancementName);
+            lore.add(ChatColor.YELLOW + "Keep this as a memento!");
+
+            meta.setLore(lore);  // Set the lore
+            trophy.setItemMeta(meta);
         }
 
-        return false;
+        // Check if the inventory has space for the item
+        if (player.getInventory().firstEmpty() != -1) {
+            player.getInventory().addItem(trophy);
+            System.out.println("Trophy given to " + player.getName());
+        } else {
+            player.sendMessage(ChatColor.RED + "Your inventory is full! You didn't receive the trophy.");
+            System.out.println(player.getName() + "'s inventory is full! No trophy given.");
+        }
+    }
+
+    // Check if the player has already received the trophy for this advancement
+    private boolean hasReceivedTrophy(Player player, String advancementKey) {
+        return awardedAdvancements.contains(advancementKey);
+    }
+
+    // Mark the advancement as awarded
+    private void markTrophyGiven(Player player, String advancementKey) {
+        awardedAdvancements.add(advancementKey);
     }
 }
