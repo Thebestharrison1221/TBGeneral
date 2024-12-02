@@ -25,14 +25,12 @@ public class OpenSelectorMenuCommand implements Listener, CommandExecutor {
     private final String invName = "Selector Menu";
     private final HashMap<UUID, Inventory> customInventories = new HashMap<>();
 
-    private final Menu adminMenu; // Reference to the Menu class (Admin Menu)
-    private final org.TBCreates.TBGeneral.commands.TrophiesMenuCommand trophiesMenuCommand; // Reference to the TrophiesMenuCommand class
+    private final Menu menu; // Reference to the Menu class (Admin Menu)
 
-    public OpenSelectorMenuCommand(TBGeneral plugin, Menu adminMenu, org.TBCreates.TBGeneral.commands.TrophiesMenuCommand trophiesMenuCommand) {
+    public OpenSelectorMenuCommand(TBGeneral plugin, Menu adminMenu) {
         // Register this class to listen for inventory click events
         Bukkit.getPluginManager().registerEvents(this, plugin);
-        this.adminMenu = adminMenu; // Store reference to the Menu (Admin Menu) class
-        this.trophiesMenuCommand = trophiesMenuCommand; // Store reference to the TrophiesMenuCommand class
+        this.menu = adminMenu; // Store reference to the Menu (Admin Menu) class
     }
 
     // Handle the command to open the menu

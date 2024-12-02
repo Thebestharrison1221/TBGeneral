@@ -2,24 +2,17 @@ package org.TBCreates.TBGeneral;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.TBCreates.TBGeneral.Listeners.CacheUnloadListener;
-import org.TBCreates.TBGeneral.Listeners.TrophiesMenuListener;
 import org.TBCreates.TBGeneral.commands.*;
-import org.TBCreates.TBGeneral.data.Cache;
-import org.TBCreates.TBGeneral.data.SQLite;
-import org.TBCreates.TBGeneral.handlers.AdvancementListener;
 import org.TBCreates.TBGeneral.handlers.PlayerHandler;
 import org.TBCreates.TBGeneral.handlers.TorchHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -28,32 +21,11 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
     // Declare the instance variable for the prefix
     private String prefix;
-    private SQLite sqlite;
-    private Cache dbCache;
-
-    public SQLite sql()
-    {
-        return sqlite;
-    }
-
-    public Cache cache()
-    {
-        return dbCache;
-    }
-
 
     @Override
     public void onEnable() {
-        // Save default config if it doesn't exist
-        saveDefaultConfig();
-
-        // Load the prefix from the config
+        // Load the prefix from the config file before using it
         loadPrefix();
-
-        // Load DB
-        sqlite = new SQLite(this);
-        sqlite.create();
-        dbCache = new Cache(this);
 
         // Example: Logging with the prefix
         Bukkit.getLogger().info("-------------------------------------");
@@ -67,7 +39,6 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         // Initialize handlers
         new TorchHandler(this);
         new PlayerHandler(this);
-        getServer().getPluginManager().registerEvents(new CacheUnloadListener(this), this);
     }
 
     @Override
@@ -83,29 +54,24 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
     // Load the prefix from the config and apply color codes
     public void loadPrefix() {
-        this.prefix = getConfig().getString("prefix", "&7[TBGeneral] "); // Default prefix if not set
-        this.prefix = ChatColor.translateAlternateColorCodes('&', prefix);  // Apply color codes
+        // Load the prefix from the config (with a default value if it's not set)
+        this.prefix = getConfig().getString("prefix", "&7[TBGeneral] ");
+        // Apply color codes to the prefix
+        this.prefix = ChatColor.translateAlternateColorCodes('&', prefix);
     }
 
     // Register commands
     private void registerCommands() {
         getCommand("fly").setExecutor(new fly(this));
-        getCommand("menu").setExecutor(new Menu(this));
+        getCommand("menu").setExecutor(new Menu(this)); // Make sure Menu is the correct executor
         getCommand("givebook").setExecutor(new ForceGiveBookCommand(this));
         getCommand("tbgeneral").setExecutor(new TBGeneralCommand(this));
         getCommand("tbgeneral").setTabCompleter(new TBGeneralCommand(this));
-        getServer().getPluginManager().registerEvents(new AdvancementListener(this), this);
+
         // Additional Game Mode and Other Commands
-        getServer().getPluginManager().registerEvents(new TrophiesMenuListener(new TrophiesMenuCommand(this)), this);
-
-        getCommand("trophiesmenu").setExecutor(new TrophiesMenuCommand(this));
-
-        Menu adminMenu = new Menu(this); // Ensure you have an appropriate constructor for Menu
-        TrophiesMenuCommand trophiesMenuCommand = new TrophiesMenuCommand(this); // Ensure you have an appropriate constructor for Menu
-        OpenSelectorMenuCommand openSelectorMenuCommand = new OpenSelectorMenuCommand(this, adminMenu, trophiesMenuCommand);
+        Menu adminMenu = new Menu(this);
+        OpenSelectorMenuCommand openSelectorMenuCommand = new OpenSelectorMenuCommand(this, adminMenu);
         getCommand("openselectormenu").setExecutor(openSelectorMenuCommand);
-
-        getServer().getPluginManager().registerEvents(new AdvancementListener(this), this);
 
         getCommand("gmc").setExecutor(new GameModeCommand(this));
         getCommand("gms").setExecutor(new GameModeCommand(this));
@@ -124,6 +90,7 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         event.setJoinMessage(getPrefix() + " Welcome " + player.getName() + " to the server!");
     }
 
+    // Load advancement paper data (example for loading JSON)
     private void loadAdvancementPaperData() {
         try {
             // Load the JSON file from the plugin's resources
