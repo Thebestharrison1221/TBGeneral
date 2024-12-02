@@ -1,6 +1,7 @@
 package org.TBCreates.TBGeneral.commands;
 
 import org.TBCreates.TBGeneral.TBGeneral;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,13 +20,13 @@ public class TBGeneralCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0) {
-            sender.sendMessage(this.plugin.getPrefix() + " &7Usage: /tbgeneral reload");
+        if (args.length == 0) {;
+            sender.sendMessage(this.plugin.getPrefix() + " Usage: /tbgeneral reload");
             return true;
         } else if (args[0].equalsIgnoreCase("reload")) {
             return this.handleReload(sender);
         } else {
-            sender.sendMessage(this.plugin.getPrefix() + " &cUnknown subcommand. Usage: /tbgeneral reload");
+            sender.sendMessage(this.plugin.getPrefix() + " Unknown subcommand. Usage: /tbgeneral reload");
             return false;
         }
     }
@@ -33,7 +34,7 @@ public class TBGeneralCommand implements CommandExecutor, TabCompleter {
     private boolean handleReload(CommandSender sender) {
         if (sender instanceof Player player) {
             if (!player.hasPermission("tbgeneral.admin")) {
-                player.sendMessage(this.plugin.getPrefix() + " &cYou do not have permission to reload the plugin.");
+                player.sendMessage(this.plugin.getPrefix() + " You do not have permission to reload the plugin.");
                 return false;
             }
         }
@@ -42,7 +43,7 @@ public class TBGeneralCommand implements CommandExecutor, TabCompleter {
         this.plugin.reloadConfig();
         this.plugin.loadPrefix();  // Ensure prefix is updated after reloading config
 
-        sender.sendMessage(this.plugin.getPrefix() + " &aPlugin reloaded successfully!");
+        sender.sendMessage(this.plugin.getPrefix() + " Plugin reloaded successfully!");
         return true;
     }
 

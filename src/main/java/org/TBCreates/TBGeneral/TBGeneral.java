@@ -24,6 +24,9 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        // Save the default config if it doesn't exist
+        saveDefaultConfig();
+
         // Load the prefix from the config file before using it
         loadPrefix();
 
