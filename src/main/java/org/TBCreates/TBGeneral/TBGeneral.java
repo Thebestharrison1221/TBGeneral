@@ -3,6 +3,7 @@ package org.TBCreates.TBGeneral;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.TBCreates.TBGeneral.commands.*;
+import org.TBCreates.TBGeneral.commands.vanish.AdminVanishCommand;
 import org.TBCreates.TBGeneral.handlers.PlayerHandler;
 import org.TBCreates.TBGeneral.handlers.TorchHandler;
 import org.bukkit.Bukkit;
@@ -83,6 +84,9 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         getCommand("heal").setExecutor(new GameModeCommand(this)); // Register heal command
         getCommand("bring").setExecutor(new GameModeCommand(this));
         getCommand("goto").setExecutor(new GameModeCommand(this));
+
+        getCommand("vanish").setExecutor(new AdminVanishCommand(this));
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     // Custom join message
@@ -91,7 +95,11 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         // Set custom join message
         event.setJoinMessage(getPrefix() + " Welcome " + player.getName() + " to the server!");
-    }
+
+        Player p = event.getPlayer();
+        AdminVanishCommand.vanished.forEach(p::hidePlayer);
+    };
+
 
     // Load advancement paper data (example for loading JSON)
     private void loadAdvancementPaperData() {

@@ -64,6 +64,18 @@ commands:
     description: Opens the main menu.
     usage: /openselectormenu
     permission: tbgeneral.admin
+  vanish:
+    description: vanish.
+    usage: /vanish
+    permission: tbgeneral.admin
+  msg:
+    description: msg.
+    usage: /msg
+    aliases: message
+  r:
+    description: msg.
+    usage: /r
+    aliases: reply
 permissions:
   tbgeneral.admin:
     description: Allows forcing the TBGeneral book to be given.
