@@ -1,4 +1,4 @@
-package org.TBCreates.TBGeneral.commands;
+package org.TBCreates.TBGeneral.commands.menu;
 
 import org.TBCreates.TBGeneral.TBGeneral;
 import org.bukkit.Bukkit;

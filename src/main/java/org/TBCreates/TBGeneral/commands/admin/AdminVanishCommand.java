@@ -1,4 +1,4 @@
-package org.TBCreates.TBGeneral.commands.vanish;
+package org.TBCreates.TBGeneral.commands.admin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

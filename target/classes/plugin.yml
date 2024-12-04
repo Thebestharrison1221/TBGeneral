@@ -68,6 +68,27 @@ commands:
     description: vanish.
     usage: /vanish
     permission: tbgeneral.admin
+  trophiesmenu:
+    description: trophiesmenu.
+    usage: /trophiesmenu
+    permission: tbgeneral.admin
+  msg:
+    description: msg.
+    usage: /msg
+    aliases: message
+  reply:
+    description: msg.
+    usage: /r
+    aliases: reply
+  tpa:
+    description: Request to teleport to another player.
+    usage: /tpa <player>
+  tpaccept:
+    description: Accept a teleport request.
+    usage: /tpaccept
+  tpdeny:
+    description: Deny a teleport request.
+    usage: /tpdeny
 permissions:
   tbgeneral.admin:
     description: Allows forcing the TBGeneral book to be given.

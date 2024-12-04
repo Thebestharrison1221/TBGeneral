@@ -1,4 +1,4 @@
-package org.TBCreates.TBGeneral.commands;
+package org.TBCreates.TBGeneral.commands.admin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

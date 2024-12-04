@@ -1,4 +1,4 @@
-package org.TBCreates.TBGeneral.commands;
+package org.TBCreates.TBGeneral.commands.admin;
 
 import org.TBCreates.TBGeneral.TBGeneral;  // Import your main plugin class to access the prefix
 import org.bukkit.GameMode;

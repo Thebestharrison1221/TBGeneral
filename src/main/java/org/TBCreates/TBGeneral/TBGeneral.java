@@ -3,7 +3,18 @@ package org.TBCreates.TBGeneral;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.TBCreates.TBGeneral.commands.*;
-import org.TBCreates.TBGeneral.commands.vanish.AdminVanishCommand;
+import org.TBCreates.TBGeneral.commands.admin.ForceGiveBookCommand;
+import org.TBCreates.TBGeneral.commands.admin.GameModeCommand;
+import org.TBCreates.TBGeneral.commands.admin.fly;
+import org.TBCreates.TBGeneral.commands.menu.Menu;
+import org.TBCreates.TBGeneral.commands.menu.OpenSelectorMenuCommand;
+
+import org.TBCreates.TBGeneral.commands.player.message.MsgCommand;
+import org.TBCreates.TBGeneral.commands.player.message.ReplyCommand;
+import org.TBCreates.TBGeneral.commands.admin.AdminVanishCommand;
+import org.TBCreates.TBGeneral.commands.player.tpcmds.TpAcceptCommand;
+import org.TBCreates.TBGeneral.commands.player.tpcmds.TpDenyCommand;
+import org.TBCreates.TBGeneral.commands.player.tpcmds.TpaCommand;
 import org.TBCreates.TBGeneral.handlers.PlayerHandler;
 import org.TBCreates.TBGeneral.handlers.TorchHandler;
 import org.bukkit.Bukkit;
@@ -17,11 +28,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.HashMap;
+import java.util.UUID;
 
 public final class TBGeneral extends JavaPlugin implements Listener {
 
     // Declare the instance variable for the prefix
     private String prefix;
+
+    // HashMap to store teleport requests
+    private final HashMap<UUID, UUID> teleportRequests = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -56,6 +72,11 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         return prefix;
     }
 
+    // Getter for teleportRequests
+    public HashMap<UUID, UUID> getTeleportRequests() {
+        return teleportRequests;
+    }
+
     // Load the prefix from the config and apply color codes
     public void loadPrefix() {
         // Load the prefix from the config (with a default value if it's not set)
@@ -85,6 +106,14 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         getCommand("bring").setExecutor(new GameModeCommand(this));
         getCommand("goto").setExecutor(new GameModeCommand(this));
 
+        this.getCommand("msg").setExecutor(new MsgCommand(this));
+        this.getCommand("reply").setExecutor(new ReplyCommand(this));
+
+        getCommand("tpa").setExecutor(new TpaCommand(this));
+        getCommand("tpaccept").setExecutor(new TpAcceptCommand(this));
+        getCommand("tpdeny").setExecutor(new TpDenyCommand(this));
+
+
         getCommand("vanish").setExecutor(new AdminVanishCommand(this));
         getServer().getPluginManager().registerEvents(this, this);
     }
@@ -98,30 +127,8 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
         Player p = event.getPlayer();
         AdminVanishCommand.vanished.forEach(p::hidePlayer);
-    };
-
-
-    // Load advancement paper data (example for loading JSON)
-    private void loadAdvancementPaperData() {
-        try {
-            // Load the JSON file from the plugin's resources
-            Reader reader = new InputStreamReader(getResource("advancementpaper.json"));
-
-            if (reader != null) {
-                // Parse the JSON file using Gson
-                Gson gson = new Gson();
-                JsonObject json = gson.fromJson(reader, JsonObject.class);
-
-                // Example: Print out the data in the JSON
-                getLogger().info("Loaded advancement data: " + json.toString());
-            } else {
-                getLogger().warning("advancementpaper.json not found in resources.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            getLogger().warning("Error loading advancementpaper.json.");
-        }
     }
+
 
     // Custom leave message
     @EventHandler
