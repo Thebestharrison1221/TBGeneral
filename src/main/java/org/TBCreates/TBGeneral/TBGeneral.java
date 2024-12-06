@@ -2,6 +2,7 @@ package org.TBCreates.TBGeneral;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.TBCreates.TBGeneral.Listeners.tabcompleter.TBGeneralTabCompleter;
 import org.TBCreates.TBGeneral.commands.*;
 import org.TBCreates.TBGeneral.commands.admin.ForceGiveBookCommand;
 import org.TBCreates.TBGeneral.commands.admin.GameModeCommand;
@@ -112,7 +113,8 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         getCommand("tpa").setExecutor(new TpaCommand(this));
         getCommand("tpaccept").setExecutor(new TpAcceptCommand(this));
         getCommand("tpdeny").setExecutor(new TpDenyCommand(this));
-
+        boolean allowTpToSelf = getConfig().getBoolean("settings.allow-tp-to-self", false);
+        getLogger().info("Allow teleport to self: " + allowTpToSelf);
 
         getCommand("vanish").setExecutor(new AdminVanishCommand(this));
         getServer().getPluginManager().registerEvents(this, this);

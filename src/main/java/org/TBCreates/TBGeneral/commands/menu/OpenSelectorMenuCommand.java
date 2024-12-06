@@ -78,7 +78,6 @@ public class OpenSelectorMenuCommand implements Listener, CommandExecutor {
             case 52:
             case 51:
             case 50:
-                player.chat("/gmsel");
                 break;
 
             // Blue Glass - Open Trophies Menu
@@ -113,7 +112,7 @@ public class OpenSelectorMenuCommand implements Listener, CommandExecutor {
         // Blue Glass (Center-left section)
         int[] blueGlassSlots = {1, 2, 3, 10, 11, 12, 19, 20, 21};
         for (int slot : blueGlassSlots) {
-            inv.setItem(slot, getGlassPaneItem(Material.BLUE_STAINED_GLASS_PANE, "&9Trophies", "&aClick to open Trophies menu"));
+            inv.setItem(slot, getGlassPaneItem(Material.BLUE_STAINED_GLASS_PANE, "&4COMING SOON", "&aCome back later"));
         }
 
         // Pink Glass (Bottom-right section)

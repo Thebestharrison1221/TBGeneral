@@ -92,4 +92,3 @@ commands:
 permissions:
   tbgeneral.admin:
     description: Allows forcing the TBGeneral book to be given.
-
