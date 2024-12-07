@@ -2,6 +2,7 @@ package org.TBCreates.TBGeneral.commands.player.tpcmds;
 
 import org.TBCreates.TBGeneral.TBGeneral;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,18 +26,32 @@ public class TpDenyCommand implements CommandExecutor {
         }
 
         Player denier = (Player) sender;
-        UUID requesterUuid = plugin.getTeleportRequests().remove(denier.getUniqueId());
+
+        // Thread-safe access to teleport requests
+        UUID requesterUuid;
+        synchronized (plugin.getTeleportRequests()) {
+            requesterUuid = plugin.getTeleportRequests().remove(denier.getUniqueId());
+        }
 
         if (requesterUuid == null) {
-            denier.sendMessage("You have no pending teleport requests.");
+            denier.sendMessage(formatMessage("&cYou have no pending teleport requests."));
             return true;
         }
 
         Player requester = Bukkit.getPlayer(requesterUuid);
         if (requester != null && requester.isOnline()) {
-            requester.sendMessage("Your teleport request to " + denier.getName() + " has been denied.");
+            requester.sendMessage(formatMessage("&cYour teleport request to " + denier.getName() + " has been denied."));
+        } else {
+            Bukkit.getLogger().warning("Teleport request from " + requesterUuid + " could not notify the requester: they are offline.");
         }
-        denier.sendMessage("Teleport request denied.");
+
+        denier.sendMessage(formatMessage("&aTeleport request denied."));
+        Bukkit.getLogger().info("Teleport request from " + requesterUuid + " to " + denier.getName() + " was denied.");
         return true;
+    }
+
+    private String formatMessage(String message) {
+        String prefix = plugin.getPrefix() != null ? plugin.getPrefix() : "&7[Teleport]";
+        return ChatColor.translateAlternateColorCodes('&', prefix + " " + message);
     }
 }

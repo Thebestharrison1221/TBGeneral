@@ -34,7 +34,7 @@ public class AdminVanishCommand implements CommandExecutor {
                 }
                 // Unvanish
                 vanished.remove(p);
-                p.sendMessage(prefix + ChatColor.YELLOW + " You have unvanished");
+                p.sendMessage(prefix + ChatColor.GREEN + " You have unvanished");
             } else {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.hidePlayer(p);

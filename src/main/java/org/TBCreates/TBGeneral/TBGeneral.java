@@ -9,7 +9,6 @@ import org.TBCreates.TBGeneral.commands.admin.GameModeCommand;
 import org.TBCreates.TBGeneral.commands.admin.fly;
 import org.TBCreates.TBGeneral.commands.menu.Menu;
 import org.TBCreates.TBGeneral.commands.menu.OpenSelectorMenuCommand;
-
 import org.TBCreates.TBGeneral.commands.player.message.MsgCommand;
 import org.TBCreates.TBGeneral.commands.player.message.ReplyCommand;
 import org.TBCreates.TBGeneral.commands.admin.AdminVanishCommand;
@@ -27,10 +26,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.UUID;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
 
 public final class TBGeneral extends JavaPlugin implements Listener {
 
@@ -40,6 +40,9 @@ public final class TBGeneral extends JavaPlugin implements Listener {
     // HashMap to store teleport requests
     private final HashMap<UUID, UUID> teleportRequests = new HashMap<>();
 
+    // Set to track vanished players
+    private final Set<UUID> vanishedPlayers = new HashSet<>();
+
     @Override
     public void onEnable() {
         // Save the default config if it doesn't exist
@@ -47,6 +50,9 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
         // Load the prefix from the config file before using it
         loadPrefix();
+
+        // Set texture pack URL in server.properties
+        updateTexturePackInServerProperties();
 
         // Example: Logging with the prefix
         Bukkit.getLogger().info("-------------------------------------");
@@ -84,6 +90,46 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         this.prefix = getConfig().getString("prefix", "&7[TBGeneral] ");
         // Apply color codes to the prefix
         this.prefix = ChatColor.translateAlternateColorCodes('&', prefix);
+    }
+
+    // New Method: Update Texture Pack URL in server.properties
+    private void updateTexturePackInServerProperties() {
+        // Get the texture pack URL from the config
+        String texturePackUrl = getConfig().getString("texture-pack-url");
+
+        if (texturePackUrl == null || texturePackUrl.isEmpty()) {
+            getLogger().warning("Texture pack URL not set in config.yml. Skipping update of server.properties.");
+            return;
+        }
+
+        // Load the server.properties file
+        File serverPropertiesFile = new File("server.properties");
+        if (!serverPropertiesFile.exists()) {
+            getLogger().severe("server.properties file not found! Cannot set the texture pack URL.");
+            return;
+        }
+
+        try {
+            // Load properties from the file
+            Properties properties = new Properties();
+            try (FileInputStream inputStream = new FileInputStream(serverPropertiesFile)) {
+                properties.load(inputStream);
+            }
+
+            // Update the texture pack URL
+            properties.setProperty("resource-pack", texturePackUrl);
+
+            // Save the updated properties back to the file
+            try (FileOutputStream outputStream = new FileOutputStream(serverPropertiesFile)) {
+                properties.store(outputStream, "Updated by TBGeneral plugin");
+            }
+
+            getLogger().info("Successfully updated texture pack URL in server.properties.");
+
+        } catch (IOException e) {
+            getLogger().severe("An error occurred while updating server.properties: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     // Register commands
@@ -124,19 +170,39 @@ public final class TBGeneral extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        // Set custom join message
+        UUID playerUUID = player.getUniqueId();
+
+        // Check if the player was vanished when they left
+        if (vanishedPlayers.contains(playerUUID)) {
+            // Hide the player from others and suppress the join message
+            event.setJoinMessage(null);
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                onlinePlayer.hidePlayer(this, player);
+            }
+            return;
+        }
+
+        // Set custom join message for non-vanished players
         event.setJoinMessage(getPrefix() + " Welcome " + player.getName() + " to the server!");
-
-        Player p = event.getPlayer();
-        AdminVanishCommand.vanished.forEach(p::hidePlayer);
     }
-
 
     // Custom leave message
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        // Set custom quit message
-        event.setQuitMessage(getPrefix() + " Goodbye " + player.getName() + "!");
+        UUID playerUUID = player.getUniqueId();
+
+        // Check if the player is vanished and persist their vanished state
+        if (AdminVanishCommand.vanished.contains(player)) {
+            vanishedPlayers.add(playerUUID);
+            event.setQuitMessage(null); // Suppress leave message
+        } else {
+            vanishedPlayers.remove(playerUUID); // Remove from vanished list if no longer vanished
+        }
+
+        // Set custom quit message for non-vanished players
+        if (!vanishedPlayers.contains(playerUUID)) {
+            event.setQuitMessage(getPrefix() + " Goodbye " + player.getName() + "!");
+        }
     }
 }

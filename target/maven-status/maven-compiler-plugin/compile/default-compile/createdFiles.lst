@@ -1,7 +1,6 @@
 org\TBCreates\TBGeneral\commands\admin\fly.class
 org\TBCreates\TBGeneral\commands\player\tpcmds\TpAcceptCommand.class
 org\TBCreates\TBGeneral\commands\TBGeneralCommand.class
-org\TBCreates\TBGeneral\commands\TBGeneralCommand$1.class
 org\TBCreates\TBGeneral\EMenuType.class
 org\TBCreates\TBGeneral\commands\player\tpcmds\TpaCommand.class
 org\TBCreates\TBGeneral\commands\player\tpcmds\TpaCommand$1.class
@@ -11,6 +10,7 @@ org\TBCreates\TBGeneral\handlers\TorchHandler.class
 org\TBCreates\TBGeneral\TBGeneral.class
 org\TBCreates\TBGeneral\commands\player\message\MsgCommand.class
 org\TBCreates\TBGeneral\commands\player\message\ReplyCommand.class
+org\TBCreates\TBGeneral\commands\player\tpcmds\TpaCommand$2.class
 org\TBCreates\TBGeneral\commands\admin\ForceGiveBookCommand.class
 org\TBCreates\TBGeneral\commands\admin\AdminVanishCommand.class
 org\TBCreates\TBGeneral\commands\player\tpcmds\TpDenyCommand.class
