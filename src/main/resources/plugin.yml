@@ -68,10 +68,6 @@ commands:
     description: vanish.
     usage: /vanish
     permission: tbgeneral.admin
-  trophiesmenu:
-    description: trophiesmenu.
-    usage: /trophiesmenu
-    permission: tbgeneral.admin
   msg:
     description: msg.
     usage: /msg
