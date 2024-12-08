@@ -3,11 +3,20 @@ package org.TBCreates.TBGeneral;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.TBCreates.TBGeneral.commands.*;
-import org.TBCreates.TBGeneral.commands.vanish.AdminVanishCommand;
+import org.TBCreates.TBGeneral.commands.admin.ForceGiveBookCommand;
+import org.TBCreates.TBGeneral.commands.admin.GameModeCommand;
+import org.TBCreates.TBGeneral.commands.admin.fly;
+import org.TBCreates.TBGeneral.commands.menu.Menu;
+import org.TBCreates.TBGeneral.commands.menu.OpenSelectorMenuCommand;
+
+import org.TBCreates.TBGeneral.commands.message.MsgCommand;
+import org.TBCreates.TBGeneral.commands.message.ReplyCommand;
+import org.TBCreates.TBGeneral.commands.admin.AdminVanishCommand;
 import org.TBCreates.TBGeneral.handlers.PlayerHandler;
 import org.TBCreates.TBGeneral.handlers.TorchHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,9 +41,9 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         loadPrefix();
 
         // Example: Logging with the prefix
-        Bukkit.getLogger().info("-------------------------------------");
-        Bukkit.getLogger().info(prefix + " Plugin enabled!");
-        Bukkit.getLogger().info("-------------------------------------");
+        Bukkit.getLogger().info(ChatColor.RED + "-------------------------------------------");
+        Bukkit.getLogger().info(prefix + ChatColor.RED +" Plugin Successfully enabled!");
+        Bukkit.getLogger().info(ChatColor.RED + "-------------------------------------------");
 
         // Register commands and listeners
         registerCommands();
@@ -84,6 +93,10 @@ public final class TBGeneral extends JavaPlugin implements Listener {
         getCommand("heal").setExecutor(new GameModeCommand(this)); // Register heal command
         getCommand("bring").setExecutor(new GameModeCommand(this));
         getCommand("goto").setExecutor(new GameModeCommand(this));
+
+        this.getCommand("msg").setExecutor(new MsgCommand(this));
+        this.getCommand("reply").setExecutor(new ReplyCommand(this));
+
 
         getCommand("vanish").setExecutor(new AdminVanishCommand(this));
         getServer().getPluginManager().registerEvents(this, this);

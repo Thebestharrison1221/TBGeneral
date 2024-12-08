@@ -72,10 +72,14 @@ commands:
     description: msg.
     usage: /msg
     aliases: message
-  r:
+  reply:
     description: msg.
     usage: /r
     aliases: reply
+  trophiesmenu:
+    description: trophiesmenu.
+    usage: /trophiesmenu
+    permission: tbgeneral.admin
 permissions:
   tbgeneral.admin:
     description: Allows forcing the TBGeneral book to be given.

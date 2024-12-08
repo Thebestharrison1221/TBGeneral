@@ -68,6 +68,22 @@ commands:
     description: vanish.
     usage: /vanish
     permission: tbgeneral.admin
+  msg:
+    description: msg.
+    usage: /msg
+    aliases: message
+  reply:
+    description: msg.
+    usage: /r
+    aliases: reply
+  trophiesmenu:
+    description: trophiesmenu.
+    usage: /trophiesmenu
+    permission: tbgeneral.admin
+  guiapi:
+    description: Main plugin command
+    usage: /guiapi reload, /guiapi debug
+    permission: guiapi.command
 permissions:
   tbgeneral.admin:
     description: Allows forcing the TBGeneral book to be given.
