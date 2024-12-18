@@ -147,9 +147,9 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
     // Register commands
     private void registerCommands() {
+        getCommand("givebook").setExecutor(new ForceGiveBookCommand(this));
         getCommand("fly").setExecutor(new fly(this));
         getCommand("menu").setExecutor(new Menu(this)); // Make sure Menu is the correct executor
-        getCommand("givebook").setExecutor(new ForceGiveBookCommand(this));
         getCommand("tbgeneral").setExecutor(new TBGeneralCommand(this));
         getCommand("tbgeneral").setTabCompleter(new TBGeneralCommand(this));
 
@@ -160,7 +160,7 @@ public final class TBGeneral extends JavaPlugin implements Listener {
 
         TpaManager tpaManager = new TpaManager();
         getCommand("tpa").setExecutor(new TpaCommand(tpaManager));
-        getCommand("tpaaccept").setExecutor(new AcceptCommand(tpaManager));
+        getCommand("tpaccept").setExecutor(new AcceptCommand(tpaManager));
 
         getCommand("gmc").setExecutor(new GameModeCommand(this));
         getCommand("gms").setExecutor(new GameModeCommand(this));

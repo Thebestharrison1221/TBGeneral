@@ -82,9 +82,6 @@ commands:
   tpaccept:
     description: Accept a teleport request.
     usage: /tpaccept
-  tpdeny:
-    description: Deny a teleport request.
-    usage: /tpdeny
 permissions:
   tbgeneral.admin:
-    description: Allows forcing the TBGeneral book to be given.
+    description: Admin for tbgeneral plugin.
